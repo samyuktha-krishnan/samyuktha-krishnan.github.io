@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Samyuktha Krishnan — Computer Engineering @ UW</title>
+<meta name="description" content="Computer Engineering student at UW. Building at the edge of hardware and software.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f1e7;
+    --bg-warm: #efe6d2;
+    --paper: #fbf7ee;
+    --ink: #1a1612;
+    --muted: #6b6357;
+    --line: #d9cfba;
+    --accent: #a8501c;
+    --accent-soft: #d97041;
+    --serif: 'EB Garamond', Georgia, serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    /* subtle paper grain */
+    background-image:
+      url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* ============ NAV ============ */
+  .nav-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(246, 241, 231, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+  }
+
+  .nav-logo {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-logo .dot {
+    width: 7px; height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+  }
+
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+    position: relative;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -4px;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  /* ============ HERO ============ */
+  .hero {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 32px 64px;
+    position: relative;
+  }
+
+  .hero-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-bottom: 56px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .hero-meta .right { display: flex; gap: 20px; }
+  .hero-meta .right span { display: inline-flex; align-items: center; gap: 6px; }
+  .hero-meta .live::before {
+    content: "";
+    width: 6px; height: 6px;
+    background: #10b981;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(3.5rem, 11vw, 8.5rem);
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    
+    margin-bottom: 48px;
+  }
+
+  .hero-main {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: end;
+    margin-bottom: 48px;
+  }
+
+  .hero-main h1 { margin-bottom: 0; }
+
+  .hero-photo {
+    width: 220px;
+    height: 270px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: 0 12px 30px -16px rgba(26, 22, 18, 0.25);
+    flex-shrink: 0;
+    transform: rotate(2deg);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .hero-photo:hover { transform: rotate(0deg) scale(1.02); }
+
+  .hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    filter: saturate(0.92) contrast(1.02);
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+
+  .hero h1 .line { display: block; }
+  .hero h1 .indent { padding-left: 1.5em; }
+
+  .hero-bottom {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 48px;
+    align-items: end;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+
+  .hero-tag {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 38ch;
+    line-height: 1.5;
+  }
+
+  .hero-tag span { color: var(--ink); font-style: italic; }
+
+  .hero-cta {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 24px;
+  }
+  .hero-link {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    font-style: italic;
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    border-bottom: 1.5px solid transparent;
+    padding-bottom: 2px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .hero-link span {
+    font-size: 0.85rem;
+    opacity: 0.5;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  .hero-link:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .hero-link:hover span {
+    transform: translate(3px, -3px);
+    opacity: 1;
+  }
+
+  /* ============ MARQUEE ============ */
+  .marquee {
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-warm);
+    padding: 16px 0;
+  }
+  .marquee-track {
+    display: flex;
+    gap: 48px;
+    white-space: nowrap;
+    animation: scroll 40s linear infinite;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--ink);
+  }
+  .marquee-track span { display: inline-flex; align-items: center; gap: 8px; }
+  .marquee-track .star { color: var(--accent); }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ============ SECTIONS ============ */
+  .section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 96px 32px;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 56px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    
+  }
+  .section-title em { font-style: italic; color: var(--accent); font-weight: 300; }
+
+  /* ============ ABOUT ============ */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+
+  .about-prose p {
+    font-size: 1.1rem;
+    margin-bottom: 18px;
+    max-width: 50ch;
+    color: var(--ink);
+  }
+  .about-prose p:last-child { margin-bottom: 0; }
+  .about-prose em { font-style: italic; color: var(--accent); }
+  .about-prose strong, .hero-tag strong, .exp-desc strong, .project-desc strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .about-side {
+    border-left: 1px solid var(--line);
+    padding-left: 32px;
+  }
+
+  .about-side h3 {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  .about-side h3:not(:first-child) { margin-top: 32px; }
+
+  .about-side ul {
+    list-style: none;
+    font-size: 0.95rem;
+  }
+  .about-side ul li {
+    padding: 6px 0;
+    color: var(--ink);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .about-side ul li::before {
+    content: "→";
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+  }
+
+  .stack-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .stack-grid span {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    padding: 5px 11px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    transition: all 0.15s ease;
+  }
+  .stack-grid span:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  /* ============ EXPERIENCE ============ */
+  .exp-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 48px;
+    padding: 36px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: start;
+  }
+  .exp-item:first-of-type { padding-top: 0; }
+  .exp-item:last-of-type { border-bottom: none; }
+
+  .exp-date {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--muted);
+    padding-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .exp-title {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    
+  }
+
+  .exp-role {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .exp-desc {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 55ch;
+    margin-bottom: 14px;
+  }
+
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .exp-tags span {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    padding: 3px 9px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+  }
+
+  /* ============ PROJECTS ============ */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .project-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 240px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card.featured {
+    grid-column: 1 / -1;
+    min-height: 200px;
+    background: linear-gradient(135deg, var(--paper) 0%, var(--bg-warm) 100%);
+  }
+
+  .project-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s ease;
+  }
+
+  .project-card:hover::before { transform: scaleY(1); }
+  .project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px -16px rgba(168, 80, 28, 0.25);
+  }
+  .project-card:hover .project-arrow { transform: translate(4px, -4px); opacity: 1; }
+
+  .project-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .project-meta .tag { color: var(--accent); }
+
+  .project-title {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.15;
+    
+    margin-top: 4px;
+  }
+
+  .project-card.featured .project-title { font-size: 1.9rem; }
+
+  .project-desc {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .project-stats {
+    display: flex;
+    gap: 24px;
+    margin-top: 8px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+  }
+  .project-stat {
+    font-family: var(--mono);
+  }
+  .project-stat .num {
+    display: block;
+    font-size: 1.1rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .project-stat .label {
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .project-tech {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink);
+    margin-top: 4px;
+  }
+  .project-tech .dim { color: var(--muted); }
+
+  .project-arrow {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-family: var(--mono);
+    color: var(--accent);
+    opacity: 0.4;
+    transition: all 0.25s ease;
+  }
+
+  /* ============ CONTACT ============ */
+  .contact-section {
+    background: var(--ink);
+    color: var(--bg);
+    margin-top: 64px;
+    padding: 96px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-section::before {
+    content: "";
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+    opacity: 0.2;
+    border-radius: 50%;
+  }
+
+  .contact-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+
+  .contact-headline {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    
+    max-width: 18ch;
+  }
+
+  .contact-email {
+    display: inline-block;
+    font-family: var(--serif);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-style: italic;
+    color: var(--bg);
+    text-decoration: none;
+    border-bottom: 2px solid var(--accent-soft);
+    padding-bottom: 4px;
+    margin-bottom: 56px;
+    transition: color 0.2s ease;
+  }
+  .contact-email:hover { color: var(--accent-soft); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .contact-grid a {
+    background: var(--ink);
+    padding: 24px 20px;
+    text-decoration: none;
+    color: var(--bg);
+    transition: background 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .contact-grid a:hover {
+    background: rgba(168, 80, 28, 0.15);
+  }
+  .contact-grid .ch-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .contact-grid .ch-value {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--bg);
+  }
+  .contact-grid .ch-arrow {
+    font-family: var(--mono);
+    color: var(--accent-soft);
+    font-size: 0.85rem;
+    margin-top: 4px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--ink);
+    color: var(--muted);
+    padding: 24px 32px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ============ MOBILE: photo stack only on narrow screens ============ */
+  @media (max-width: 540px) {
+    .hero-main { grid-template-columns: 1fr; gap: 24px; align-items: start; }
+    .hero-photo { width: 140px; height: 170px; transform: rotate(-2deg); }
+  }
+
+  /* ============ MOBILE ============ */
+  @media (max-width: 820px) {
+    .nav-inner { padding: 14px 20px; }
+    .nav-links { gap: 18px; }
+    .hero { padding: 56px 20px 48px; }
+    .hero h1 .indent { padding-left: 0.6em; }
+    .hero-bottom { grid-template-columns: 1fr; gap: 24px; }
+    .hero-cta { align-items: flex-start; justify-content: flex-start; }
+    .section { padding: 72px 20px; }
+    .section-head { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-side { border-left: none; padding-left: 0; border-top: 1px solid var(--line); padding-top: 32px; }
+    .exp-item { grid-template-columns: 1fr; gap: 8px; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card.featured { grid-column: auto; }
+    .contact-section { padding: 72px 0; }
+    .contact-inner { padding: 0 20px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <div class="nav-bar">
+    <div class="nav-inner">
+      <div class="nav-logo"><span class="dot"></span>samyuktha krishnan</div>
+      <div class="nav-links">
+        <a href="#about">about</a>
+        <a href="#experience">work</a>
+        <a href="#projects">projects</a>
+        <a href="#contact">contact</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-meta">
+      <span>computer engineering · uw '28</span>
+      <div class="right">
+        <span class="live">available for opportunities</span>
+        <span>seattle</span>
+      </div>
+    </div>
+
+    <div class="hero-main">
+      <h1>
+        <span class="line">Samyuktha</span>
+        <span class="line"><em>Krishnan.</em></span>
+      </h1>
+      <div class="hero-photo">
+        <img src="samyuktha.jpg" alt="Samyuktha Krishnan" />
+      </div>
+    </div>
+
+    <div class="hero-bottom">
+      <p class="hero-tag">
+        <strong>Computer Engineering at UW.</strong> I like working on things that sit between hardware and software — <strong>ultrasonic transducers, custom processors, ML on small devices.</strong>
+      </p>
+      <div class="hero-cta">
+        <a href="mailto:sk30@cs.washington.edu" class="hero-link">email <span>↗</span></a>
+        <a href="SamyukthaKrishnan_Resume.pdf" target="_blank" class="hero-link">resume <span>↗</span></a>
+        <a href="https://github.com/samyuktha-krishnan" target="_blank" class="hero-link">github <span>↗</span></a>
+        <a href="https://www.linkedin.com/in/samyuktha-s-krishnan" target="_blank" class="hero-link">linkedin <span>↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="section-head">
+      <span class="section-num">01 / about</span>
+      <h2 class="section-title">about</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-prose">
+        <p>I'm a <strong>Computer Engineering major at the University of Washington</strong>, minoring in Statistics and Entrepreneurship. <strong>Graduating 2028.</strong></p>
+        <p>Most of my time goes into projects that mix hardware and software. Right now I'm researching at UW's <strong>Center for Industrial and Medical Ultrasound (CIMU)</strong>, where I build ultrasonic transducers and write control logic for the robotic arm we use to place them.</p>
+        <p>Outside of school I sing, play guitar, read a lot, and drink too much coffee. I'm always down to grab one — coffee, that is.</p>
+      </div>
+
+      <aside class="about-side">
+        <h3>currently</h3>
+        <ul>
+          <li>Research at CIMU</li>
+          <li>UW Computer Engineering '28</li>
+        </ul>
+
+        <h3>communities</h3>
+        <ul>
+          <li>DubsTech — event coordinator</li>
+          <li>Women in Computing — outreach</li>
+          <li>Society of Women Engineers</li>
+          <li>Lavin Entrepreneurship</li>
+          <li>WE Lead</li>
+          <li>CSeed</li>
+        </ul>
+
+        <h3>stack</h3>
+        <div class="stack-grid">
+          <span>C++</span>
+          <span>Python</span>
+          <span>Java</span>
+          <span>MATLAB</span>
+          <span>R</span>
+          <span>JavaScript</span>
+          <span>React</span>
+          <span>Firebase</span>
+          <span>Arduino</span>
+          <span>PCB</span>
+          <span>Git</span>
+          <span>Linux</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section" id="experience">
+    <div class="section-head">
+      <span class="section-num">02 / experience</span>
+      <h2 class="section-title">experience</h2>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Nov 2025 —<br>present</div>
+      <div>
+        <h3 class="exp-title">Center for Industrial &amp; Medical Ultrasound</h3>
+        <div class="exp-role">Research Intern</div>
+        <p class="exp-desc">Building and tuning <strong>ultrasonic transducers</strong> from the component level — piezo stack assembly, backing layer integration, electrical interfacing. Developing <strong>robotic arm control logic</strong> to automate transducer placement and validate <strong>HIFU bonding performance</strong>.</p>
+        <div class="exp-tags">
+          <span>MATLAB</span>
+          <span>Python</span>
+          <span>PCB</span>
+          <span>Signal Analysis</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Sept 2023 —<br>Feb 2024</div>
+      <div>
+        <h3 class="exp-title">Inspirit AI</h3>
+        <div class="exp-role">Research Intern</div>
+        <p class="exp-desc">Applied <strong>CNNs, RNNs, and LSTMs to EEG data for early seizure detection</strong> by identifying critical spatial-temporal patterns. Built a preprocessing pipeline with band-pass filtering and a <strong>real-time Python backend for immediate alerts</strong>.</p>
+        <div class="exp-tags">
+          <span>CNNs</span>
+          <span>LSTMs</span>
+          <span>Python</span>
+          <span>Signal Processing</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section" id="projects">
+    <div class="section-head">
+      <span class="section-num">03 / projects</span>
+      <h2 class="section-title">projects</h2>
+    </div>
+
+    <div class="projects-grid">
+
+      <a href="https://github.com/samyuktha-krishnan" target="_blank" class="project-card featured">
+        <div class="project-meta">
+          <span class="tag">featured</span>
+          <span>2025 — 2026</span>
+        </div>
+        <h3 class="project-title">Custom RISC-V Core with ML Inference Engine</h3>
+        <p class="project-desc">Designed and simulated a <strong>low-power RISC-V core with an integrated ML accelerator</strong>. Built a verification suite that validated functionality across 10 different ML workloads.</p>
+        <div class="project-stats">
+          <div class="project-stat">
+            <span class="num">−25%</span>
+            <span class="label">inference power</span>
+          </div>
+          <div class="project-stat">
+            <span class="num">+15%</span>
+            <span class="label">execution speed</span>
+          </div>
+          <div class="project-stat">
+            <span class="num">10</span>
+            <span class="label">ML workloads</span>
+          </div>
+        </div>
+        <div class="project-tech">RISC-V <span class="dim">·</span> Verilog <span class="dim">·</span> ML Acceleration</div>
+        <span class="project-arrow">↗</span>
+      </a>
+
+      <a href="https://github.com/samyuktha-krishnan" target="_blank" class="project-card">
+        <div class="project-meta">
+          <span class="tag">hardware</span>
+          <span>2025</span>
+        </div>
+        <h3 class="project-title">Evolve Charge</h3>
+        <p class="project-desc">Built and tested <strong>3 hardware prototypes of proprietary EV charging stations</strong>. Pitched at STEM StartUps to 20+ judges and <strong>won development funding</strong>.</p>
+        <div class="project-stats">
+          <div class="project-stat">
+            <span class="num">−20%</span>
+            <span class="label">assembly time</span>
+          </div>
+          <div class="project-stat">
+            <span class="num">$200</span>
+            <span class="label">grant won</span>
+          </div>
+        </div>
+        <div class="project-tech">PCB <span class="dim">·</span> Hardware <span class="dim">·</span> EV</div>
+        <span class="project-arrow">↗</span>
+      </a>
+
+      <a href="https://github.com/samyuktha-krishnan" target="_blank" class="project-card">
+        <div class="project-meta">
+          <span class="tag">research</span>
+          <span>2023 — 2024</span>
+        </div>
+        <h3 class="project-title">MarineAid</h3>
+        <p class="project-desc"><strong>Bayesian Network model for mercury resilience</strong> in aquatic ecosystems. Used Shannon-Weiner Index and HRV to model climate–biodiversity interdependencies.</p>
+        <div class="project-stats">
+          <div class="project-stat">
+            <span class="num">0.861</span>
+            <span class="label">kappa score</span>
+          </div>
+          <div class="project-stat">
+            <span class="num">0.746</span>
+            <span class="label">roc-auc</span>
+          </div>
+        </div>
+        <div class="project-tech">Bayesian Networks <span class="dim">·</span> R <span class="dim">·</span> Python</div>
+        <span class="project-arrow">↗</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="contact-inner">
+      <div class="contact-label">04 / contact</div>
+      <h2 class="contact-headline">get in touch</h2>
+      <a href="mailto:sk30@cs.washington.edu" class="contact-email">sk30@cs.washington.edu</a>
+
+      <div class="contact-grid">
+        <a href="mailto:sk30@cs.washington.edu">
+          <span class="ch-label">email</span>
+          <span class="ch-value">sk30@cs.washington.edu</span>
+          <span class="ch-arrow">→</span>
+        </a>
+        <a href="https://github.com/samyuktha-krishnan" target="_blank">
+          <span class="ch-label">github</span>
+          <span class="ch-value">@samyuktha-krishnan</span>
+          <span class="ch-arrow">↗</span>
+        </a>
+        <a href="https://www.linkedin.com/in/samyuktha-s-krishnan" target="_blank">
+          <span class="ch-label">linkedin</span>
+          <span class="ch-value">/samyuktha-s-krishnan</span>
+          <span class="ch-arrow">↗</span>
+        </a>
+        <a href="SamyukthaKrishnan_Resume.pdf" target="_blank">
+          <span class="ch-label">resume</span>
+          <span class="ch-value">resume.pdf</span>
+          <span class="ch-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <span>© 2026 Samyuktha Krishnan</span>
+      <span>seattle, wa</span>
+    </div>
+  </footer>
+
+</body>
+</html>
